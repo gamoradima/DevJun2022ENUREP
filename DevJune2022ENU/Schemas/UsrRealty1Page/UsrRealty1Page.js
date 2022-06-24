@@ -6,6 +6,22 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 				"dataValueType": Terrasoft.DataValueType.BOOLEAN,
 				"type": Terrasoft.ViewModelColumnType.VIRTUAL_COLUMN,
 				"value": false
+			},
+			"CommissionUSD": {
+				"dataValueType": Terrasoft.DataValueType.FLOAT,
+				"type": Terrasoft.ViewModelColumnType.VIRTUAL_COLUMN,
+				"value": 0.0,
+                dependencies: [
+                    {
+                        columns: ["UsrPriceUSD", "UsrOfferType"],
+                        methodName: "calculateCommission"
+                    }
+                ]
+			},
+			"UsrOfferType": {
+				lookupListConfig: {
+					columns: ["UsrCommissionCoeff"]
+				}
 			}
 		},
 		modules: /**SCHEMA_MODULES*/{}/**SCHEMA_MODULES*/,
@@ -16,6 +32,14 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 				"filter": {
 					"masterColumn": "Id",
 					"detailColumn": "UsrRealty"
+				}
+			},
+			"UsrSchema1ac60da7Detail43ee77fd": {
+				"schemaName": "UsrRealtyVisitDetail",
+				"entitySchemaName": "UsrRealtyVisit",
+				"filter": {
+					"detailColumn": "UsrParentRealty",
+					"masterColumn": "Id"
 				}
 			}
 		}/**SCHEMA_DETAILS*/,
@@ -65,9 +89,23 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 			}
 		}/**SCHEMA_BUSINESS_RULES*/,
 		methods: {
+			calculateCommission: function() {
+				var price = this.get("UsrPriceUSD");
+				if (!price) {
+					price = 0;
+				}
+				var offerTypeObject = this.get("UsrOfferType");
+				var coeff = 0;
+				if (offerTypeObject) {
+					coeff = offerTypeObject.UsrCommissionCoeff;
+				}
+				var result = price * coeff;
+				this.set("CommissionUSD", result);
+			},			
 			onEntityInitialized: function() {
 				this.callParent(arguments);
 				this.getOperationAccessData();
+				this.calculateCommission();
 			},
 			
 			getOperationAccessData: function() {
@@ -152,13 +190,34 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 			},
 			{
 				"operation": "insert",
-				"name": "MyButton",
+				"name": "CommissionControl",
 				"values": {
 					"layout": {
 						"colSpan": 24,
 						"rowSpan": 1,
 						"column": 0,
 						"row": 3,
+						"layoutName": "ProfileContainer"
+					},
+					"bindTo": "CommissionUSD",
+					"enabled": false,
+					"caption": {
+						"bindTo": "Resources.Strings.CommissionCaption"
+					}
+				},
+				"parentName": "ProfileContainer",
+				"propertyName": "items",
+				"index": 2
+			},
+			{
+				"operation": "insert",
+				"name": "MyButton",
+				"values": {
+					"layout": {
+						"colSpan": 24,
+						"rowSpan": 1,
+						"column": 0,
+						"row": 4,
 						"layoutName": "ProfileContainer"
 					},
 					"itemType": 5,
@@ -255,10 +314,10 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 			},
 			{
 				"operation": "insert",
-				"name": "NotesAndFilesTab",
+				"name": "Tab1bfdeb82TabLabel",
 				"values": {
 					"caption": {
-						"bindTo": "Resources.Strings.NotesAndFilesTabCaption"
+						"bindTo": "Resources.Strings.Tab1bfdeb82TabLabelTabCaption"
 					},
 					"items": [],
 					"order": 0
@@ -266,6 +325,31 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 				"parentName": "Tabs",
 				"propertyName": "tabs",
 				"index": 0
+			},
+			{
+				"operation": "insert",
+				"name": "UsrSchema1ac60da7Detail43ee77fd",
+				"values": {
+					"itemType": 2,
+					"markerValue": "added-detail"
+				},
+				"parentName": "Tab1bfdeb82TabLabel",
+				"propertyName": "items",
+				"index": 0
+			},
+			{
+				"operation": "insert",
+				"name": "NotesAndFilesTab",
+				"values": {
+					"caption": {
+						"bindTo": "Resources.Strings.NotesAndFilesTabCaption"
+					},
+					"items": [],
+					"order": 1
+				},
+				"parentName": "Tabs",
+				"propertyName": "tabs",
+				"index": 1
 			},
 			{
 				"operation": "insert",
@@ -323,7 +407,7 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 				"operation": "merge",
 				"name": "ESNTab",
 				"values": {
-					"order": 1
+					"order": 2
 				}
 			}
 		]/**SCHEMA_DIFF*/

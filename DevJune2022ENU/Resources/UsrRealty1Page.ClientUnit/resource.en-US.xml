@@ -3,7 +3,10 @@
 	<Group Type="String">
 		<Items>
 			<Item Name="Caption" Value="Edit page: &quot;Realty&quot;" />
+			<Item Name="LocalizableStrings.CommissionCaption.Value" Value="Commission, USD" />
 			<Item Name="LocalizableStrings.MyButtonCaption.Value" Value="PUSH ME!" />
+			<Item Name="LocalizableStrings.Tab1bfdeb82TabLabelTabCaption.Value" Value="Visits" />
+			<Item Name="LocalizableStrings.UsrSchema1ac60da7Detail43ee77fdDetailCaptionOnPage.Value" Value="Realty visit" />
 		</Items>
 	</Group>
 </Resources>
