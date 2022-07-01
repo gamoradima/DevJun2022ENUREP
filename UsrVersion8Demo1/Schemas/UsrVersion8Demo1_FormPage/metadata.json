@@ -1,0 +1,7 @@
+= MetaData.Schema.UId "b2f4e604-ef4a-47f2-a409-ca087d32c41c"
+= MetaData.Schema.A2 "UsrVersion8Demo1_FormPage"
+= MetaData.Schema.A5 "6f71e54c-1960-40c9-94f6-073fd67699ab"
+= MetaData.Schema.B6 "3a6d9520-ad1d-40fe-bda3-2e5ed1cc507b"
+= MetaData.Schema.HD1 "0f8eb896-7b62-4dfa-bd55-a414f50932a7"
+- MetaData.Schema.B7
++ MetaData.Schema.B7 false

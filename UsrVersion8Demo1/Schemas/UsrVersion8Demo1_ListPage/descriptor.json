@@ -1,0 +1,14 @@
+﻿{
+  "Descriptor": {
+    "UId": "9edbbb9c-0b49-4778-86fe-c758d1b4f539",
+    "Name": "UsrVersion8Demo1_ListPage",
+    "ModifiedOnUtc": "\/Date(1656406715000)\/",
+    "Parent": {
+      "UId": "a5678241-e5e0-f691-b825-84b6039d5fa2",
+      "Name": "BaseGridSectionTemplate"
+    },
+    "ManagerName": "ClientUnitSchemaManager",
+    "Caption": "Version8Demo1 list page",
+    "DependsOn": []
+  }
+}

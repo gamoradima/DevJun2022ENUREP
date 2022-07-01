@@ -1,4 +1,4 @@
-define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
+define("UsrRealty1Page", ["RightUtilities", "ServiceHelper"], function(RightUtilities, ServiceHelper) {
 	return {
 		entitySchemaName: "UsrRealty",
 		attributes: {
@@ -22,6 +22,16 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 				lookupListConfig: {
 					columns: ["UsrCommissionCoeff"]
 				}
+			},
+			"UsrManager": {
+				dataValueType: Terrasoft.DataValueType.LOOKUP,
+				lookupListConfig: {
+					filter: function() {
+						const filter =  this.Terrasoft.createColumnFilterWithParameter(this.Terrasoft.ComparisonType.EQUAL,
+							"[SysAdminUnit:Contact:Id].Active", true);
+						return filter;
+					}
+				}				
 			}
 		},
 		modules: /**SCHEMA_MODULES*/{}/**SCHEMA_MODULES*/,
@@ -88,7 +98,41 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 				}
 			}
 		}/**SCHEMA_BUSINESS_RULES*/,
+		messages: {
+			"MyMessageCode": {
+        		mode: Terrasoft.MessageMode.PTP,
+        		direction: Terrasoft.MessageDirectionType.PUBLISH
+		    },
+		},
+
 		methods: {
+			/*getActiveUserFilter: function() {
+				const filter =  this.Terrasoft.createColumnFilterWithParameter(this.Terrasoft.ComparisonType.EQUAL,
+						"[SysAdminUnit:Contact:Id].Active", true);
+				return filter;
+			},*/		
+			init: function() {
+ 				this.callParent(arguments);
+				// Registering of messages
+    				this.sandbox.registerMessages(this.messages);
+			},
+			
+			setValidationConfig: function() {
+                /* Call the initialization of the parent view model's validators. */
+                this.callParent(arguments);
+                this.addColumnValidator("UsrPriceUSD", this.positiveValueValidator);
+                this.addColumnValidator("UsrAreaSqM", this.positiveValueValidator);
+            },
+			positiveValueValidator: function(value, column) {
+				var msg = "";
+				if (value < 0) {
+					msg = this.get("Resources.Strings.ValueMustBeGreaterThatZero");
+				}
+				return {
+					invalidMessage: msg
+				};
+			},		
+			
 			calculateCommission: function() {
 				var price = this.get("UsrPriceUSD");
 				if (!price) {
@@ -122,6 +166,16 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 			onMyButtonClick: function() {
 				this.showInformationDialog("My button was pressed!");
 				this.console.log("Yes, it's true. Our button was pressed.");
+				
+				var obj = {
+					value: "f8a1563c-bd82-4bf6-b984-650d83aaa5a5",
+					displayValue: "3. Parking Lot"
+				};
+				this.set("UsrType", obj);
+				
+				this.console.log("Message published.");
+				var result = this.sandbox.publish("MyMessageCode", null, []);
+				this.console.log("Subscriber responded: " + result);
 			},
 			getMyButtonEnabled: function() {
 				let result = true;
@@ -130,7 +184,96 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 					result = false;
 				}
 				return result;
-			}
+			},
+			runWebServiceButtonClick: function() {
+				var typeObject = this.get("UsrType");
+				if (!typeObject) {
+					return;
+				}
+				var typeId = typeObject.value;
+				var offerTypeObject = this.get("UsrOfferType");
+				if (!offerTypeObject) {
+					return;
+				}
+				var offerTypeId = offerTypeObject.value;
+				var serviceData = {
+					realtyTypeId: typeId,
+					realtyOfferTypeId: offerTypeId
+				};				
+				this.console.log("1");
+				ServiceHelper.callService("RealtyService", "GetTotalAmountByTypeId", this.getWebServiceResult, serviceData, this);
+				this.console.log("2");
+			},
+			getWebServiceResult: function(response, success) {
+				this.console.log("3");
+				this.Terrasoft.showInformation("Total amount by typeId: " + response.GetTotalAmountByTypeIdResult);
+			},
+			asyncValidate: function(callback, scope) {
+				this.callParent([
+						function(response) {
+					if (!this.validateResponse(response)) {
+						return;
+					}
+					this.validateRealtyData(function(response) {
+						if (!this.validateResponse(response)) {
+							return;
+						}
+						callback.call(scope, response);
+					}, this);
+				}, this]);
+			},
+			validateRealtyData: function(callback, scope) {
+				// create query for server side
+				var esq = this.Ext.create("Terrasoft.EntitySchemaQuery", {
+					rootSchemaName: "UsrRealty"
+				});
+				esq.addAggregationSchemaColumn("UsrPriceUSD", Terrasoft.AggregationType.SUM, "PriceSum");
+				
+				var typeObject = this.get("UsrType");
+				if (!typeObject) {
+					return;
+				}
+				var typeId = typeObject.value;
+				
+				var offerTypeObject = this.get("UsrOfferType");
+				if (!offerTypeObject) {
+					return;
+				}
+				var offerTypeId = offerTypeObject.value;
+
+				var typeFilter = esq.createColumnFilterWithParameter(this.Terrasoft.ComparisonType.EQUAL,
+					"UsrType", typeId);
+				
+				var offerTypeFilter = esq.createColumnFilterWithParameter(this.Terrasoft.ComparisonType.EQUAL,
+					"UsrOfferType", offerTypeId);
+				esq.filters.addItem(typeFilter);
+				esq.filters.addItem(offerTypeFilter);
+				// run query
+				esq.getEntityCollection(function(response) {
+					if (response.success && response.collection) {
+						var sum = 0;
+						var items = response.collection.getItems();
+						if (items.length > 0) {
+							sum = items[0].get("PriceSum");
+						}
+						var max = 500000;
+						if (sum > max) {
+							if (callback) {
+								callback.call(this, {
+									success: false,
+									message: "You cannot save, because sum = " + sum + " is bigger than " + max
+								});
+							}
+						} else
+						if (callback) {
+							callback.call(scope, {
+								success: true
+							});
+						}
+					}
+				}, this);
+			},
+
 		},
 		dataModels: /**SCHEMA_DATA_MODELS*/{}/**SCHEMA_DATA_MODELS*/,
 		diff: /**SCHEMA_DIFF*/[
@@ -214,7 +357,7 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 				"name": "MyButton",
 				"values": {
 					"layout": {
-						"colSpan": 24,
+						"colSpan": 12,
 						"rowSpan": 1,
 						"column": 0,
 						"row": 4,
@@ -231,6 +374,30 @@ define("UsrRealty1Page", ["RightUtilities"], function(RightUtilities) {
 						"bindTo": "getMyButtonEnabled"
 					},
 					"style": "red"
+				},
+				"parentName": "ProfileContainer",
+				"propertyName": "items",
+				"index": 3
+			},
+			{
+				"operation": "insert",
+				"name": "RunWebServiceButton",
+				"values": {
+					"layout": {
+						"colSpan": 12,
+						"rowSpan": 1,
+						"column": 12,
+						"row": 4,
+						"layoutName": "ProfileContainer"
+					},
+					"itemType": 5,
+					"caption": {
+						"bindTo": "Resources.Strings.RunWebServiceButtonCaption"
+					},
+					"click": {
+						"bindTo": "runWebServiceButtonClick"
+					},
+					"style": "green"
 				},
 				"parentName": "ProfileContainer",
 				"propertyName": "items",

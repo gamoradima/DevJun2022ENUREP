@@ -1,0 +1,10 @@
+﻿{
+  "Descriptor": {
+    "UId": "f0f6557f-7c32-4e34-967d-37586b1d0256",
+    "Name": "UsrApp_pg1jdod",
+    "Type": 1,
+    "Maintainer": "Customer",
+    "ProjectPath": "Files/UsrApp_pg1jdod.csproj",
+    "DependsOn": []
+  }
+}

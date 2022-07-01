@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Resources Culture="en-US">
+	<Group Type="String">
+		<Items>
+			<Item Name="Caption" Value="Customer Input Page" />
+			<Item Name="Parameters.3406c361-0902-4a4e-8176-84ed0036c349.Caption" Value="Address" />
+			<Item Name="Parameters.821f2b0e-5522-42f4-a130-b991bcba17f8.Caption" Value="Customer Contact Name" />
+			<Item Name="Parameters.8621430d-5b06-4298-9f13-9e159eb4a465.Caption" Value="CustomerEmail" />
+			<Item Name="Parameters.bfff7d7d-8518-482d-9161-fdd4fc8c7771.Caption" Value="Name" />
+			<Item Name="Parameters.c49bd85e-159a-49ee-b10a-3c3bca63d7d5.Value.c4841740-ff8c-406f-8626-1c78f78608bf.Caption" Value="Close" />
+			<Item Name="Parameters.c49bd85e-159a-49ee-b10a-3c3bca63d7d5.Value.f073e66a-36ec-47d7-9c6a-e5952dbf05a3.Caption" Value="Save" />
+		</Items>
+	</Group>
+</Resources>

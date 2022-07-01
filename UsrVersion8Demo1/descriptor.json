@@ -1,0 +1,17 @@
+﻿{
+  "Descriptor": {
+    "UId": "3a6d9520-ad1d-40fe-bda3-2e5ed1cc507b",
+    "Name": "UsrVersion8Demo1",
+    "Type": 1,
+    "ModifiedOnUtc": "\/Date(1632313759000)\/",
+    "Maintainer": "Customer",
+    "ProjectPath": "Files/UsrVersion8Demo1.csproj",
+    "DependsOn": [
+      {
+        "UId": "613fd913-be03-46ce-909b-f44e4225469e",
+        "PackageVersion": "7.8.0",
+        "Name": "UIv2"
+      }
+    ]
+  }
+}

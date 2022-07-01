@@ -1,0 +1,13 @@
+﻿{
+  "Descriptor": {
+    "UId": "bb846190-0eff-419b-885e-5f5b2cff4fa0",
+    "Name": "UsrCustomerInputPage1",
+    "ModifiedOnUtc": "\/Date(1656423017000)\/",
+    "Parent": {
+      "UId": "21620f25-166f-42f1-8b4d-224a959040a3",
+      "Name": "BasePageProcessTemplate"
+    },
+    "ManagerName": "ClientUnitSchemaManager",
+    "Caption": "Customer Input Page"
+  }
+}

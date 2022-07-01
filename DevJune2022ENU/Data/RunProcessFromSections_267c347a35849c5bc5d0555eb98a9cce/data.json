@@ -1,0 +1,54 @@
+﻿{
+  "PackageData": [
+    {
+      "Row": [
+        {
+          "SchemaColumnUId": "ae0e45ca-c495-4fe7-a39d-3ab7278e1617",
+          "Value": "35c1f692-d730-42b9-ad71-98bce43c14c6"
+        },
+        {
+          "SchemaColumnUId": "18fd508a-8e32-454d-bd8a-82a9d4028ace",
+          "Value": "0f727f11-d569-484e-a969-c2c045464f50"
+        },
+        {
+          "SchemaColumnUId": "4420cc5f-5a43-490b-b583-f8572ac29dce",
+          "Value": "c40f3278-911e-4864-8230-b5d04de67648",
+          "DisplayValue": "Realty"
+        },
+        {
+          "SchemaColumnUId": "a9f680eb-bc67-4aac-919e-0ad9f1000690",
+          "Value": "3bbf4d4d-f97e-4dbe-abe0-11ab8cf3756b"
+        },
+        {
+          "SchemaColumnUId": "aadb966f-e2f2-4239-b56f-51ba5fdf0533",
+          "Value": 1
+        }
+      ]
+    },
+    {
+      "Row": [
+        {
+          "SchemaColumnUId": "ae0e45ca-c495-4fe7-a39d-3ab7278e1617",
+          "Value": "d1960ac9-dbb6-4b8c-9120-db836eed191f"
+        },
+        {
+          "SchemaColumnUId": "18fd508a-8e32-454d-bd8a-82a9d4028ace",
+          "Value": "null"
+        },
+        {
+          "SchemaColumnUId": "4420cc5f-5a43-490b-b583-f8572ac29dce",
+          "Value": "005063c9-8180-e011-afbc-00155d04320c",
+          "DisplayValue": "Accounts"
+        },
+        {
+          "SchemaColumnUId": "a9f680eb-bc67-4aac-919e-0ad9f1000690",
+          "Value": "6f850b37-c94d-40f9-859f-0a2bfe2af994"
+        },
+        {
+          "SchemaColumnUId": "aadb966f-e2f2-4239-b56f-51ba5fdf0533",
+          "Value": 1
+        }
+      ]
+    }
+  ]
+}

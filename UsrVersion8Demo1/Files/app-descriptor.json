@@ -1,0 +1,19 @@
+{
+  "Name": "Version8Demo1",
+  "Code": "UsrVersion8Demo1",
+  "Description": "",
+  "Maintainer": "Customer",
+  "Icon": "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzOCIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDM4IDE2Ij4KICA8ZyBpZD0ic3R1ZGlvLWxvZ28tcGFnZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTUyLjg1MykiPgogICAgPHBhdGggaWQ9IlBhdGhfMTE2MjkiIGRhdGEtbmFtZT0iUGF0aCAxMTYyOSIgZD0iTTE1NS44MywxMS40MTksMTM2LjA2NSwxNmw1Ljg4Mi00LjU4MUwxMTcuODMsMFoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC02NC45NzcpIiBmaWxsPSIjZmZmIi8+CiAgICA8cGF0aCBpZD0iUGF0aF8xMTYzMCIgZGF0YS1uYW1lPSJQYXRoIDExNjMwIiBkPSJNMTU1LjgzLDExLjMzSDE0MS45NDdMMTE3LjgzLDBaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtNjQuOTc3KSIgZmlsbD0iI2ZmZiIvPgogIDwvZz4KPC9zdmc+Cg==",
+  "IconName": "icon_151.svg",
+  "Color": "#0058EF",
+  "MarketplaceLink": "",
+  "HelpLink": "",
+  "OrderLink": "",
+  "SupportEmail": "",
+  "Packages": [
+    {
+      "UId": "3a6d9520-ad1d-40fe-bda3-2e5ed1cc507b",
+      "Name": "UsrVersion8Demo1"
+    }
+  ]
+}
